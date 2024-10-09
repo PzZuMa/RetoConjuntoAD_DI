@@ -1,15 +1,23 @@
 package org.example;
 
+import org.example.dao.CopiaDAO;
+import org.example.models.Copia;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static org.example.Login.id_usuario;
 
 public class Principal extends JFrame {
 
     private JPanel principal;
     private JButton salirButton;
     private JList list1;
+    private JButton cerrarButton;
 
-    private DefaultListModel listModel = new DefaultListModel<String>();
+    private DefaultListModel listModel = new DefaultListModel<Copia>();
 
     public Principal() {
         this.setTitle("Principal");
@@ -19,12 +27,10 @@ public class Principal extends JFrame {
         this.setSize(400, 400);
         this.setResizable(false);
 
-        listModel.addElement("Pan");
-        listModel.addElement("Leche");
-        listModel.addElement("Huevos");
-        listModel.addElement("Azucar");
-        listModel.addElement("Sal");
+        CopiaDAO cd = new CopiaDAO();
+        var listaJuegos = cd.findByID(id_usuario);
 
+        listModel.addAll(listaJuegos);
         list1.setModel(listModel);
 
         list1.getSelectionModel().addListSelectionListener(
@@ -33,13 +39,11 @@ public class Principal extends JFrame {
                         return;
                     } else {
                         System.out.println("Indice de dato seleccionado: " + list1.getSelectedIndex());
-                        var title = listModel.getElementAt(list1.getSelectedIndex());
+                        var title = (Copia) listModel.getElementAt(list1.getSelectedIndex());
+                        System.out.println("Dato seleccionado: " + title);
 
-                        System.out.println(title);
-
-                        var details = new Info();
+                        var details = new Info(title);
                         details.setVisible(true);
-
                     }
                 }
         );
@@ -48,6 +52,10 @@ public class Principal extends JFrame {
             Login login = new Login();
             login.setVisible(true);
             this.setVisible(false);
+        });
+
+        cerrarButton.addActionListener(e -> {
+            System.exit(0);
         });
     }
 }
