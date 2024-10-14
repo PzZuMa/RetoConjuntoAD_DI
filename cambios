@@ -1,0 +1,7 @@
+Añadir crear usuario y que pueda agregar peliculas.
+Añadir agregar peliculas.
+Añadir editar datos de la tabla.
+Añadir clase 'Session' que guarde los datos del usuario y los objetos seleccionados.
+
+Forma de ejecutar la aplicacion con la variable de entorno:
+  system.getEnv("MYSQL_ROOT_PASSWORD")
