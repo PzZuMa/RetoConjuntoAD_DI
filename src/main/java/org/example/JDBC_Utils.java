@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class JDBC_Utils {
 
@@ -17,10 +18,11 @@ public class JDBC_Utils {
         String url = "jdbc:mysql://localhost:3306/ejercicioConjunto";
         String user = "root";
         String password = "1234";
+
         try {
             conn = DriverManager.getConnection(url,user,password);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al conectar con la base de datos.");
         }
     }
 }

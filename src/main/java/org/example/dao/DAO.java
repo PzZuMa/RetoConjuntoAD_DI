@@ -1,17 +1,14 @@
 package org.example.dao;
 
-import org.example.models.Copia;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public interface DAO<T> {
 
-    public List<T> findAll();
-    public List<T> findByID(Integer id);
+    ArrayList<T> findAll();
+    T findByID(Integer id);
+    void insert(T t);
+    void update(Integer id);
+    void deleteByID(Integer id);
 
-//    public void searchByID();
-//    public void insert();
-//    public void update();
-//    public void deleteByID();
-//    public void deleteAll();
 }

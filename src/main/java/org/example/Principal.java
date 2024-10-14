@@ -2,11 +2,9 @@ package org.example;
 
 import org.example.dao.CopiaDAO;
 import org.example.models.Copia;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import static org.example.Login.id_usuario;
 
@@ -28,7 +26,12 @@ public class Principal extends JFrame {
         this.setResizable(false);
 
         CopiaDAO cd = new CopiaDAO();
-        var listaJuegos = cd.findByID(id_usuario);
+        var listaJuegos = new ArrayList<Copia>();
+        if (id_usuario == 0) {
+            listaJuegos = cd.findAll();
+        } else {
+            listaJuegos = cd.findPelisByUser(id_usuario);
+        }
 
         listModel.addAll(listaJuegos);
         list1.setModel(listModel);
@@ -38,10 +41,7 @@ public class Principal extends JFrame {
                     if (e.getValueIsAdjusting()){
                         return;
                     } else {
-                        System.out.println("Indice de dato seleccionado: " + list1.getSelectedIndex());
                         var title = (Copia) listModel.getElementAt(list1.getSelectedIndex());
-                        System.out.println("Dato seleccionado: " + title);
-
                         var details = new Info(title);
                         details.setVisible(true);
                     }

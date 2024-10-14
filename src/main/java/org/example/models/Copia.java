@@ -13,8 +13,8 @@ import java.sql.SQLException;
 @NoArgsConstructor
 public class Copia {
     private Integer id;
-    private Integer id_usuario;
     private Integer id_pelicula;
+    private Integer id_usuario;
     private String estado;
     private String soporte;
 
@@ -37,9 +37,6 @@ public class Copia {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-
-
-
 
         return tituloPelicula + " - " + estado + " - " + soporte;
     }

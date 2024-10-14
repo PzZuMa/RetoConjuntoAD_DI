@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.dao.CopiaDAO;
+import org.example.dao.PeliculaDAO;
 import org.example.models.Copia;
 import org.example.models.Pelicula;
 
@@ -21,11 +22,12 @@ public class Info extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setSize(1000, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(400, 400);
 
-        CopiaDAO cd = new CopiaDAO();
-        Pelicula og = cd.findPeliculaByID(title.getId_pelicula());
+        PeliculaDAO pd = new PeliculaDAO();
+        Pelicula og = pd.findByID(title.getId_pelicula());
 
         setTitle(og.getTitulo());
 

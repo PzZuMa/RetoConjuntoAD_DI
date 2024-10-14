@@ -76,7 +76,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="juanperez"/>
+                  <text value="mariagonzalez"/>
                 </properties>
               </component>
             </children>
@@ -116,14 +116,14 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="password123"/>
+                  <text value="mypassword"/>
                 </properties>
               </component>
             </children>
           </grid>
         </children>
       </grid>
-      <grid id="3428e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="25" vgap="0">
+      <grid id="3428e" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="25" vgap="5">
         <margin top="25" left="0" bottom="25" right="0"/>
         <constraints border-constraint="South"/>
         <properties/>
