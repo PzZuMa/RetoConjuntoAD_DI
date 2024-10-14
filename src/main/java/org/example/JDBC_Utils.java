@@ -2,11 +2,9 @@ package org.example;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Locale;
 
 public class JDBC_Utils {
 
