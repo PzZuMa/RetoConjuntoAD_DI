@@ -8,6 +8,9 @@ import org.example.dao.JDBC_Utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Clase que representa una copia de una película.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

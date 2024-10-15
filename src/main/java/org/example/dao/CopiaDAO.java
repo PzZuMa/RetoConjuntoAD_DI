@@ -1,14 +1,14 @@
 package org.example.dao;
 
-import org.example.Session;
 import org.example.models.Copia;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Clase que implementa la interfaz DAO y se encarga de manejar las copias en la base de datos
+ */
 public class CopiaDAO implements DAO<Copia> {
 
     @Override
@@ -87,6 +87,11 @@ public class CopiaDAO implements DAO<Copia> {
 
     }
 
+    /**
+     * Método que busca la lista de copias de peliculas que tiene un usuario
+     * @param id id del usuario
+     * @return lista de copias que tiene el usuario
+     */
     public ArrayList<Copia> findPelisByUser(Integer id) {
         ArrayList<Copia> resultado = new ArrayList<>();
 

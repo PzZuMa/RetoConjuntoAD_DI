@@ -4,6 +4,9 @@ import org.example.dao.PeliculaDAO;
 import org.example.models.Pelicula;
 import javax.swing.*;
 
+/**
+ * Clase JDialog que muestra la informacion de la pelicula seleccionada
+ */
 public class Info extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;

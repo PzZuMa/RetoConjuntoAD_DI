@@ -4,6 +4,9 @@ import org.example.dao.UsuarioDAO;
 import javax.swing.*;
 import java.util.HashMap;
 
+/**
+ * Clase JFrame que representa graficamente la ventana de login donde el usuario se registra
+ */
 public class Login extends JFrame {
 
     private JPanel login;
@@ -11,7 +14,6 @@ public class Login extends JFrame {
     private JButton cancelButton;
     private JTextField textField1;
     private JPasswordField passwordField1;
-
 
     public Login(){
         this.setTitle("Login");

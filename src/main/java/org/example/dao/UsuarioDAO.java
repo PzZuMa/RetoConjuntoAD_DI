@@ -2,13 +2,15 @@ package org.example.dao;
 
 import org.example.models.Usuario;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase que implementa la interfaz DAO y se encarga de manejar los usuarios en la base de datos
+ */
 public class UsuarioDAO implements DAO<Usuario>{
     @Override
     public ArrayList<Usuario> findAll() {
@@ -77,6 +79,10 @@ public class UsuarioDAO implements DAO<Usuario>{
         }
     }
 
+    /**
+     * Método que busca en la base de datos los nombres de usuario y su respectiva contraseña
+     * @return HashMap con los nombres de usuario y sus contraseñas
+     */
     public HashMap<String, String> findUserPass (){
         var resultado = new HashMap<String, String>();
 
@@ -96,6 +102,11 @@ public class UsuarioDAO implements DAO<Usuario>{
         return resultado;
     }
 
+    /**
+     * Método que busca el id de un usuario por su nombre
+     * @param nombre Nombre del usuario
+     * @return Id del usuario
+     */
     public Integer findIdByName(String nombre){
         Integer id = null;
 

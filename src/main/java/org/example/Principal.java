@@ -1,12 +1,15 @@
 package org.example;
 
 import org.example.dao.CopiaDAO;
-import org.example.dao.JDBC_Utils;
 import org.example.models.Copia;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
 
+/**
+ * Clase JFrame que representa graficamente la ventana principal de la aplicación
+ * junto con la lista de copias del usuario que ha iniciado sesion.
+ */
 public class Principal extends JFrame {
 
     private JPanel principal;

@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Clase que implementa la interfaz DAO y se encarga de manejar las películas en la base de datos
+ */
 public class PeliculaDAO implements DAO<Pelicula> {
 
     @Override

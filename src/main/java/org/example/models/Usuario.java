@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que representa un usuario
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

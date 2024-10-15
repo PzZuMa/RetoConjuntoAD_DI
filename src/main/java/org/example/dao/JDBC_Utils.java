@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Clase que se encarga de manejar la conexión con la base de datos
+ */
 public class JDBC_Utils {
 
     @Getter
