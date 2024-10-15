@@ -1,8 +1,8 @@
 package org.example.dao;
 
-import org.example.JDBC_Utils;
 import org.example.models.Usuario;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UsuarioDAO implements DAO<Usuario>{
-
     @Override
     public ArrayList<Usuario> findAll() {
         ArrayList<Usuario> resultado = new ArrayList<>();
@@ -65,10 +64,6 @@ public class UsuarioDAO implements DAO<Usuario>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void update(Integer id){
     }
 
     @Override

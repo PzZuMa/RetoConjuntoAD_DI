@@ -1,13 +1,13 @@
 package org.example.dao;
 
-import org.example.JDBC_Utils;
+import org.example.Session;
 import org.example.models.Copia;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CopiaDAO implements DAO<Copia> {
 
@@ -73,10 +73,6 @@ public class CopiaDAO implements DAO<Copia> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void update(Integer id) {
     }
 
     @Override

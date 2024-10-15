@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dao;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,17 +10,19 @@ public class JDBC_Utils {
 
     @Getter
     @Setter
-    private static Connection conn;
+    public static final Connection conn;
 
     static{
         String url = "jdbc:mysql://localhost:3306/ejercicioConjunto";
         String user = "root";
-        String password = "1234";
+        String password = System.getenv("MYSQL_ROOT_PASSWORD");
+
+//        String url = "jdbc:mysql://localhost:3307/ejercicioConjunto";
 
         try {
             conn = DriverManager.getConnection(url,user,password);
         } catch (SQLException e) {
-            throw new RuntimeException("Error al conectar con la base de datos.");
+            throw new RuntimeException("Error al conectar con la base de datos." +e.getMessage());
         }
     }
 }

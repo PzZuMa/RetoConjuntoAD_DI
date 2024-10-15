@@ -37,7 +37,7 @@
           </component>
         </children>
       </grid>
-      <grid id="f2f3a" layout-manager="FlowLayout" hgap="25" vgap="25" flow-align="1">
+      <grid id="f2f3a" binding="botones" layout-manager="FlowLayout" hgap="25" vgap="25" flow-align="1">
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>

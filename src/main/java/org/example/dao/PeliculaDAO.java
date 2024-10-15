@@ -1,6 +1,5 @@
 package org.example.dao;
 
-import org.example.JDBC_Utils;
 import org.example.models.Pelicula;
 
 import java.sql.PreparedStatement;
@@ -73,10 +72,6 @@ public class PeliculaDAO implements DAO<Pelicula> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void update(Integer id) {
     }
 
     @Override

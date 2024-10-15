@@ -1,10 +1,6 @@
 package org.example;
 
-import org.example.dao.CopiaDAO;
-import org.example.dao.PeliculaDAO;
 import org.example.dao.UsuarioDAO;
-import org.example.models.Copia;
-
 import javax.swing.*;
 import java.util.HashMap;
 
@@ -16,7 +12,6 @@ public class Login extends JFrame {
     private JTextField textField1;
     private JPasswordField passwordField1;
 
-    public static Integer id_usuario;
 
     public Login(){
         this.setTitle("Login");
@@ -31,7 +26,7 @@ public class Login extends JFrame {
             var password = new String(passwordField1.getPassword());
 
             if (user.equals("admin") && password.equals("admin")){
-                id_usuario = 0;
+                Session.id_usuario = 0;
                 Principal principal = new Principal();
                 principal.setVisible(true);
                 this.setVisible(false);
@@ -46,7 +41,7 @@ public class Login extends JFrame {
                 if (mapaUsers.containsKey(user) && mapaUsers.containsValue(password)){
 
                     // Sacamos el ID del usuario que ha iniciado sesión.
-                    id_usuario = ud.findIdByName(user);
+                    Session.id_usuario = ud.findIdByName(user);
 
                     // Accedemos a la ventana principal
                     Principal principal = new Principal();

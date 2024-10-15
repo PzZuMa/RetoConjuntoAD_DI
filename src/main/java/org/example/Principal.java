@@ -1,12 +1,11 @@
 package org.example;
 
 import org.example.dao.CopiaDAO;
+import org.example.dao.JDBC_Utils;
 import org.example.models.Copia;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.util.ArrayList;
-
-import static org.example.Login.id_usuario;
 
 public class Principal extends JFrame {
 
@@ -14,6 +13,7 @@ public class Principal extends JFrame {
     private JButton salirButton;
     private JList list1;
     private JButton cerrarButton;
+    private JPanel botones;
 
     private DefaultListModel listModel = new DefaultListModel<Copia>();
 
@@ -27,10 +27,10 @@ public class Principal extends JFrame {
 
         CopiaDAO cd = new CopiaDAO();
         var listaJuegos = new ArrayList<Copia>();
-        if (id_usuario == 0) {
+        if (Session.id_usuario == 0) {
             listaJuegos = cd.findAll();
         } else {
-            listaJuegos = cd.findPelisByUser(id_usuario);
+            listaJuegos = cd.findPelisByUser(Session.id_usuario);
         }
 
         listModel.addAll(listaJuegos);
@@ -41,8 +41,8 @@ public class Principal extends JFrame {
                     if (e.getValueIsAdjusting()){
                         return;
                     } else {
-                        var title = (Copia) listModel.getElementAt(list1.getSelectedIndex());
-                        var details = new Info(title);
+                        Session.copia_seleccionada = (Copia) listModel.getElementAt(list1.getSelectedIndex());
+                        var details = new Info();
                         details.setVisible(true);
                     }
                 }

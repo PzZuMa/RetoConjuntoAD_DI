@@ -3,7 +3,7 @@ package org.example.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.JDBC_Utils;
+import org.example.dao.JDBC_Utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
