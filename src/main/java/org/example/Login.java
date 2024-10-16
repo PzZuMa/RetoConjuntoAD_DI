@@ -1,8 +1,12 @@
 package org.example;
 
+import org.example.dao.JDBC_Utils;
+import org.example.dao.Session;
 import org.example.dao.UsuarioDAO;
+import org.example.models.Usuario;
+
 import javax.swing.*;
-import java.util.HashMap;
+
 
 /**
  * Clase JFrame que representa graficamente la ventana de login donde el usuario se registra
@@ -33,19 +37,13 @@ public class Login extends JFrame {
                 principal.setVisible(true);
                 this.setVisible(false);
             } else {
-                var mapaUsers = new HashMap<String, String >();
-                var ud = new UsuarioDAO();
+                UsuarioDAO ud = new UsuarioDAO(JDBC_Utils.getConn());
+                Usuario userIntroducido = ud.validateUser(user, password);
 
-                // Sacamos los usuarios y contraseñas de la BD.
-                mapaUsers = ud.findUserPass();
+                if (userIntroducido != null) {
+                    Session.id_usuario = userIntroducido.getId();
+                    Session.usuario = userIntroducido;
 
-                // Comprobamos si el usuario y la contraseña son correctos y están en la BD.
-                if (mapaUsers.containsKey(user) && mapaUsers.containsValue(password)){
-
-                    // Sacamos el ID del usuario que ha iniciado sesión.
-                    Session.id_usuario = ud.findIdByName(user);
-
-                    // Accedemos a la ventana principal
                     Principal principal = new Principal();
                     principal.setVisible(true);
                     this.setVisible(false);
@@ -53,8 +51,6 @@ public class Login extends JFrame {
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");
                 }
             }
-
-
         });
 
         cancelButton.addActionListener(e -> {

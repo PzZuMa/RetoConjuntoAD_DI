@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.dao.CopiaDAO;
+import org.example.dao.JDBC_Utils;
+import org.example.dao.Session;
 import org.example.models.Copia;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -28,7 +30,7 @@ public class Principal extends JFrame {
         this.setSize(400, 400);
         this.setResizable(false);
 
-        CopiaDAO cd = new CopiaDAO();
+        CopiaDAO cd = new CopiaDAO(JDBC_Utils.getConn());
         var listaJuegos = new ArrayList<Copia>();
         if (Session.id_usuario == 0) {
             listaJuegos = cd.findAll();

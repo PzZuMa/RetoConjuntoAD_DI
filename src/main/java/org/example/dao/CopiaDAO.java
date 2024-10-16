@@ -1,6 +1,8 @@
 package org.example.dao;
 
 import org.example.models.Copia;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,14 +12,22 @@ import java.util.ArrayList;
  * Clase que implementa la interfaz DAO y se encarga de manejar las copias en la base de datos
  */
 public class CopiaDAO implements DAO<Copia> {
+    private static Connection connection = null;
+
+    private static final String INSERT_INTO_COPIA = "INSERT INTO Copia (id_pelicula, id_usuario, estado, soporte) values (?,?,?,?);";
+    private static final String UPDATE_COPIA = "UPDATE Copia set id_pelicula = ?, id_usuario = ?, estado = ?, soporte = ? where id = ?;";
+    private static final String DELETE_COPIA = "DELETE FROM Copia where id = ?;";
+
+    public CopiaDAO(Connection conn) {
+        connection = conn;
+    }
 
     @Override
     public ArrayList<Copia> findAll() {
         ArrayList<Copia> resultado = new ArrayList<>();
 
         try {
-            var st = JDBC_Utils.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Copia");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Copia");
 
             while (rs.next()){
                 Copia copia = new Copia();
@@ -33,8 +43,6 @@ public class CopiaDAO implements DAO<Copia> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
         return resultado;
     }
 
@@ -43,8 +51,7 @@ public class CopiaDAO implements DAO<Copia> {
         Copia copia = new Copia();
 
         try {
-            var st = JDBC_Utils.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Copia WHERE id = " + id);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Copia WHERE id = " + id);
 
             while (rs.next()){
                 copia.setId(rs.getInt("id"));
@@ -63,8 +70,7 @@ public class CopiaDAO implements DAO<Copia> {
 
     @Override
     public void insert(Copia copy) {
-        String sql = "INSERT INTO Copia (id_pelicula, id_usuario, estado, soporte) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = JDBC_Utils.getConn().prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(INSERT_INTO_COPIA)) {
             ps.setInt(1, copy.getId_pelicula());
             ps.setInt(2, copy.getId_usuario());
             ps.setString(3, copy.getEstado());
@@ -76,15 +82,27 @@ public class CopiaDAO implements DAO<Copia> {
     }
 
     @Override
-    public void deleteByID(Integer id) {
-        String sql = "DELETE FROM Copia WHERE id = ?";
-        try (PreparedStatement ps = JDBC_Utils.getConn().prepareStatement(sql)) {
+    public void delete(Integer id) {
+        try (PreparedStatement ps = connection.prepareStatement(DELETE_COPIA)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public void update(Copia copia) {
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_COPIA)) {
+            ps.setInt(1, copia.getId_pelicula());
+            ps.setInt(2, copia.getId_usuario());
+            ps.setString(3, copia.getEstado());
+            ps.setString(4, copia.getSoporte());
+            ps.setInt(5, copia.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -96,8 +114,7 @@ public class CopiaDAO implements DAO<Copia> {
         ArrayList<Copia> resultado = new ArrayList<>();
 
         try {
-            var st = JDBC_Utils.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Copia WHERE id_usuario = " + id);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Copia WHERE id_usuario = " + id);
 
             while (rs.next()){
                 Copia copia = new Copia();

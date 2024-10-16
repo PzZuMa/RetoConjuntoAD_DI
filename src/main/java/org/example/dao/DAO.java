@@ -7,10 +7,10 @@ import java.util.ArrayList;
  * @param <T> Tipo de objeto que manejará la clase DAO
  */
 public interface DAO<T> {
-
     ArrayList<T> findAll();
     T findByID(Integer id);
     void insert(T t);
-    void deleteByID(Integer id);
+    void delete(Integer id);
+    void update(T t);
 
 }

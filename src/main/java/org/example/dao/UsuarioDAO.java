@@ -2,25 +2,34 @@ package org.example.dao;
 
 import org.example.models.Usuario;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Clase que implementa la interfaz DAO y se encarga de manejar los usuarios en la base de datos
  */
-public class UsuarioDAO implements DAO<Usuario>{
+public class UsuarioDAO implements DAO<Usuario> {
+    private static Connection connection = null;
+
+    private static final String INSERT_INTO_USER = "INSERT INTO User (email, password, is_admin) values (?,?,?);";
+    private static final String UPDATE_USER = "UPDATE User set email = ?, password = ?, is_admin = ? where id = ?;";
+    private static final String DELETE_USER = "DELETE FROM User where id = ?;";
+
+    public UsuarioDAO(Connection conn) {
+        connection = conn;
+    }
+
     @Override
     public ArrayList<Usuario> findAll() {
         ArrayList<Usuario> resultado = new ArrayList<>();
 
         try {
-            var st = JDBC_Utils.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Usuario");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Usuario");
 
-            while (rs.next()){
+            while (rs.next()) {
                 Usuario user = new Usuario();
                 user.setId(rs.getInt("id"));
                 user.setNombre_usuario(rs.getString("nombre"));
@@ -39,17 +48,13 @@ public class UsuarioDAO implements DAO<Usuario>{
     @Override
     public Usuario findByID(Integer id) {
         Usuario user = new Usuario();
-
         try {
-            var st = JDBC_Utils.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Usuario WHERE id = " + id);
-
-            while (rs.next()){
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Usuario WHERE id = " + id);
+            while (rs.next()) {
                 user.setId(rs.getInt("id"));
                 user.setNombre_usuario(rs.getString("nombre"));
                 user.setContrasena(rs.getString("contraseña"));
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,8 +63,7 @@ public class UsuarioDAO implements DAO<Usuario>{
 
     @Override
     public void insert(Usuario user) {
-        String sql = "INSERT INTO Usuario (nombre, contraseña) VALUES (?, ?)";
-        try (PreparedStatement ps = JDBC_Utils.getConn().prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(INSERT_INTO_USER)) {
             ps.setString(1, user.getNombre_usuario());
             ps.setString(2, user.getContrasena());
             ps.executeUpdate();
@@ -69,9 +73,8 @@ public class UsuarioDAO implements DAO<Usuario>{
     }
 
     @Override
-    public void deleteByID(Integer id) {
-        String sql = "DELETE FROM Usuario WHERE id = ?";
-        try (PreparedStatement ps = JDBC_Utils.getConn().prepareStatement(sql)) {
+    public void delete(Integer id) {
+        try (PreparedStatement ps = connection.prepareStatement(DELETE_USER)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -79,49 +82,43 @@ public class UsuarioDAO implements DAO<Usuario>{
         }
     }
 
-    /**
-     * Método que busca en la base de datos los nombres de usuario y su respectiva contraseña
-     * @return HashMap con los nombres de usuario y sus contraseñas
-     */
-    public HashMap<String, String> findUserPass (){
-        var resultado = new HashMap<String, String>();
-
-        try {
-            var st1 = JDBC_Utils.getConn().createStatement();
-            ResultSet rsUP = st1.executeQuery("SELECT * FROM Usuario");
-
-            while (rsUP.next()){
-                String nombre = rsUP.getString("nombre");
-                String pass = rsUP.getString("contraseña");
-                resultado.put(nombre, pass);
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+    @Override
+    public void update(Usuario usuario) {
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_USER)) {
+            ps.setString(1, usuario.getNombre_usuario());
+            ps.setString(2, usuario.getContrasena());
+            ps.setInt(3, usuario.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        return resultado;
     }
 
     /**
-     * Método que busca el id de un usuario por su nombre
-     * @param nombre Nombre del usuario
-     * @return Id del usuario
+     * Método que valida si un usuario y contraseña son correctos
+     *
+     * @param email    Email del usuario
+     * @param password Contraseña del usuario
+     * @return Usuario si es correcto, null si no lo es
      */
-    public Integer findIdByName(String nombre){
-        Integer id = null;
+    public Usuario validateUser(String email, String password) {
+        Usuario output = null;
 
-        try {
-            var st2 = JDBC_Utils.getConn().createStatement();
-            ResultSet rsID = st2.executeQuery("SELECT id FROM Usuario WHERE nombre LIKE '" + nombre + "'");
-
-            while (rsID.next()){
-                id = rsID.getInt("id");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM Usuario WHERE nombre=? AND contraseña=?")) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                output = new Usuario();
+                output.setId(rs.getInt("id"));
+                output.setNombre_usuario(rs.getString("nombre"));
+                output.setContrasena(rs.getString("contraseña"));
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        return id;
+        return output;
     }
 
 }

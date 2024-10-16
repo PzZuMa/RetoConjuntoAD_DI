@@ -20,8 +20,6 @@ public class JDBC_Utils {
         String user = "root";
         String password = System.getenv("MYSQL_ROOT_PASSWORD");
 
-//        String url = "jdbc:mysql://localhost:3307/ejercicioConjunto";
-
         try {
             conn = DriverManager.getConnection(url,user,password);
         } catch (SQLException e) {
