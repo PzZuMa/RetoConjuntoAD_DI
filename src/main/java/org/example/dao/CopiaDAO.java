@@ -113,9 +113,9 @@ public class CopiaDAO implements DAO<Copia> {
     public ArrayList<Copia> findPelisByUser(Integer id) {
         ArrayList<Copia> resultado = new ArrayList<>();
 
-        try {
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM Copia WHERE id_usuario = " + id);
-
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM Copia WHERE id_usuario = ?")) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 Copia copia = new Copia();
                 copia.setId(rs.getInt("id"));
